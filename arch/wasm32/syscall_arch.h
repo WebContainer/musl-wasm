@@ -34,13 +34,13 @@
 // #define R7_OPERAND "r"(r7)
 // #endif
 
-static long __syscall0(long n);
-static long __syscall1(long n, long a);
-static long __syscall2(long n, long a, long b);
-static long __syscall3(long n, long a, long b, long c);
-static long __syscall4(long n, long a, long b, long c, long d);
-static long __syscall5(long n, long a, long b, long c, long d, long e);
-static long __syscall6(long n, long a, long b, long c, long d, long e, long f);
+extern long __syscall0(long n);
+extern long __syscall1(long n, long a);
+extern long __syscall2(long n, long a, long b);
+extern long __syscall3(long n, long a, long b, long c);
+extern long __syscall4(long n, long a, long b, long c, long d);
+extern long __syscall5(long n, long a, long b, long c, long d, long e);
+extern long __syscall6(long n, long a, long b, long c, long d, long e, long f);
 
 // #define VDSO_USEFUL
 // #define VDSO_CGT_SYM "__vdso_clock_gettime"

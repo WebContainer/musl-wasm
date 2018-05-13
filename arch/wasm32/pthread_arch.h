@@ -1,4 +1,4 @@
-static inline struct pthread *__pthread_self();
+extern struct pthread *__pthread_self();
 // {
 // 	char *self;
 // 	__asm__ __volatile__ ("mrs %0,tpidr_el0" : "=r"(self));
