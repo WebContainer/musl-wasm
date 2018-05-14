@@ -10,7 +10,7 @@ cd $MUSL_ROOT
 mkdir -p out && cd out
 AR=$LLVM_BINS/llvm-ar \
 CFLAGS="-O0 -fvisibility=default" \
-CC="$LLVM_BINS/llc --target=wasm32-unknown-unknown-wasm" \
+CC="$LLVM_BINS/clang --target=wasm32-unknown-unknown-wasm" \
 RANLIB=$LLVM_BINS/llvm-ranlib \
 ../configure --disable-shared
 make lib/libc.a
@@ -39,6 +39,38 @@ We mark any symbols we intend to import from JavaScript as _weak_.
     I'm assumnig in WASM32 pointers are 32-bit.
 
 - https://stackoverflow.com/a/18901123
+
+# Floating Point Issues
+
+Currently getting this error on compiling `printf`.
+
+```
+wasm-ld: error: __lockfile.o: undefined symbol: a_cas
+wasm-ld: error: __lockfile.o: undefined symbol: a_ll
+wasm-ld: error: __lockfile.o: undefined symbol: a_sc
+wasm-ld: error: __lock.o: undefined symbol: a_cas
+wasm-ld: error: __lock.o: undefined symbol: a_ll
+wasm-ld: error: __lock.o: undefined symbol: a_sc
+wasm-ld: error: frexpl.o: undefined symbol: __netf2
+wasm-ld: error: frexpl.o: undefined symbol: __multf3
+wasm-ld: error: vfprintf.o: undefined symbol: __extenddftf2
+wasm-ld: error: vfprintf.o: undefined symbol: __trunctfsf2
+wasm-ld: error: vfprintf.o: undefined symbol: __trunctfdf2
+wasm-ld: error: vfprintf.o: undefined symbol: __subtf3
+wasm-ld: error: vfprintf.o: undefined symbol: __unordtf2
+wasm-ld: error: vfprintf.o: undefined symbol: __addtf3
+wasm-ld: error: vfprintf.o: undefined symbol: __netf2
+wasm-ld: error: vfprintf.o: undefined symbol: __multf3
+wasm-ld: error: vfprintf.o: undefined symbol: __fixtfsi
+wasm-ld: error: vfprintf.o: undefined symbol: __floatsitf
+wasm-ld: error: vfprintf.o: undefined symbol: __fixunstfsi
+wasm-ld: error: vfprintf.o: undefined symbol: __floatunsitf
+```
+
+- It looks like these are float point routines, possibly provided by the compiler, but we disable builtins.
+- https://gcc.gnu.org/onlinedocs/gccint/Soft-float-library-routines.html
+- https://embeddedartistry.com/blog/2017/10/9/r1q7pksku2q3gww9rpqef0dnskphtc
+
 
 <!-- Links -->
 
