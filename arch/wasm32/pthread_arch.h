@@ -1,11 +1,10 @@
-extern struct pthread *__pthread_self();
-// {
-// 	char *self;
-// 	__asm__ __volatile__ ("mrs %0,tpidr_el0" : "=r"(self));
-// 	return (void*)(self + 16 - sizeof(struct pthread));
-// }
+static inline struct pthread *__pthread_self()
+{
+	struct pthread *self;
+	return self;
+}
 
-#define TLS_ABOVE_TP
-#define TP_ADJ(p) ((char *)(p) + sizeof(struct pthread) - 16)
+#define TP_ADJ(p) (p)
 
-#define MC_PC pc
+#define REG_EIP 0
+#define MC_PC regs[REG_EIP]
