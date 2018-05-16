@@ -5,3 +5,5 @@
 
 #define LONG_MAX  INT_MAX
 #define LLONG_MAX  0x7fffffffffffffffLL
+
+#define PAGESIZE (1024*64)
